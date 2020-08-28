@@ -5,7 +5,9 @@ const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
 const mongoSanitize = require('express-mongo-sanitize');
 const connectDB = require('./config/db');
-const { dirname } = require('path');
+
+// routes import
+const boards = require('./routes/boards');
 
 // load env variables
 dotenv.config({ path: './config/config.env' });
@@ -35,6 +37,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/', (req, res) => {
   res.send('<h1>Hello</h1>');
 });
+
+
+app.use('/api/v1/boards', boards);
 
 const PORT = process.env.PORT || 5000;
 
