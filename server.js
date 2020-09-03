@@ -10,6 +10,7 @@ const connectDB = require('./config/db');
 // routes import
 const boards = require('./routes/boards');
 const threads = require('./routes/threads');
+const messages = require('./routes/messages');
 
 // load env variables
 dotenv.config({ path: './config/config.env' });
@@ -43,6 +44,7 @@ app.get('/', (req, res) => {
 
 app.use('/api/v1/boards', boards);
 app.use('/api/v1/threads', threads);
+app.use('/api/v1/messages', messages);
 
 app.use(errorHandlder);
 
