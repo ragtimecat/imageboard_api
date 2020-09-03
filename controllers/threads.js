@@ -1,4 +1,4 @@
-// const Thread = require('../models/Thread');
+const Thread = require('../models/Thread');
 const asyncHandler = require('../middleware/async');
 // const ErrorResponse = require('../utils/errorResponse');
 
