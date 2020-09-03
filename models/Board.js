@@ -11,12 +11,12 @@ const BoardSchema = new mongoose.Schema({
   description: {
     type: String,
     required: true,
-    maxlength: [20, "Please add a short description"]
+    maxlength: [40, "Please add a short description"]
   },
-  threads: {
+  threads: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Thread'
-  }
+  }]
 });
 
 module.exports = mongoose.model('Board', BoardSchema);
