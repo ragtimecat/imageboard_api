@@ -7,6 +7,8 @@ const {
   deleteThread
 } = require('../controllers/threads');
 
+const { protect, authorize } = require('../middleware/auth');
+
 //import other resource routers
 const messageRouter = require('./messages');
 
@@ -21,7 +23,7 @@ router.route('/')
 
 router.route('/:id')
   .get(getThread)
-  .put(updateThread)
-  .delete(deleteThread);
+  .put(protect, authorize('moderator', 'admin'), updateThread)
+  .delete(protect, authorize('moderator', 'admin'), deleteThread);
 
 module.exports = router;

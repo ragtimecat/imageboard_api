@@ -36,6 +36,10 @@ UserSchema.methods.getSignedJwtToken = function () {
   });
 }
 
+UserSchema.methods.matchPassword = async function (enteredPassword) {
+  return await bcrypt.compare(enteredPassword, this.password);
+}
+
 UserSchema.pre('save', async function () {
   if (!this.isModified('password')) {
     next();

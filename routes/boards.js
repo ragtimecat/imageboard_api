@@ -7,7 +7,7 @@ const {
   deleteBoard
 } = require('../controllers/boards');
 
-// model import
+const { protect, authorize } = require('../middleware/auth');
 
 //import other resource routers
 const threadRouter = require('./threads');
@@ -19,12 +19,12 @@ router.use('/:boardId/threads', threadRouter);
 
 router.route('/')
   .get(getBoards)
-  .post(createBoard);
+  .post(protect, authorize('admin'), createBoard);
 
 router.route('/:id')
   .get(getBoard)
-  .put(updateBoard)
-  .delete(deleteBoard);
+  .put(protect, authorize('moderator', 'admin'), updateBoard)
+  .delete(protect, authorize('admin'), deleteBoard);
 
 module.exports = router;
 

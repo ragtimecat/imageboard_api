@@ -7,12 +7,12 @@ const User = require('../models/User');
 exports.protect = asyncHandler(async (req, res, next) => {
   let token;
 
-  if (req.header.authorization && req.header.authorization.startsWith('Bearer')) {
+  if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
     // set token from header
-    token = req.header.authorization.split(' ')[1];
-  } else if (req.cookie.token) {
+    token = req.headers.authorization.split(' ')[1];
+  } else if (req.cookies.token) {
     //set token from cookies
-    token = req.cookie.token;
+    token = req.cookies.token;
   }
 
   // make sure token exists
@@ -25,6 +25,7 @@ exports.protect = asyncHandler(async (req, res, next) => {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
     req.user = await User.findById(decoded.id);
+    console.log(req.user);
 
     next();
   } catch (err) {
@@ -35,7 +36,7 @@ exports.protect = asyncHandler(async (req, res, next) => {
 exports.authorize = (...roles) => {
   return (req, res, next) => {
     if (!roles.includes(req.user.role)) {
-      return next(new ErrorResponse(`User role ${req.user.role}} is not authorized to access this route`, 401));
+      return next(new ErrorResponse(`User role ${req.user.role} is not authorized to access this route`, 401));
     }
 
     next();

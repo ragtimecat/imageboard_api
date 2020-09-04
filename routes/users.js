@@ -1,21 +1,23 @@
 const express = require('express');
 const {
   getUsers,
-  // getUser,
-  // createUser,
-  // updateUser,
-  // deleteUser
+  getUser,
+  createUser,
+  updateUser,
+  deleteUser
 } = require('../controllers/users');
 
 const router = express.Router();
 
-router.route('/')
-  .get(getUsers)
-  .post(createUser);
+const { protect, authorize } = require('../middleware/auth');
 
-// router.route('/:id')
-//   .get(getThread)
-//   .put(updateThread)
-//   .delete(deleteThread);
+router.route('/')
+  .get(protect, authorize('admin'), getUsers)
+  .post(protect, authorize('admin'), createUser);
+
+router.route('/:id')
+  .get(getUser)
+  .put(updateUser)
+  .delete(deleteUser);
 
 module.exports = router;
