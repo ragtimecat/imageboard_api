@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
 const mongoSanitize = require('express-mongo-sanitize');
 const connectDB = require('./config/db');
+const cors = require('cors');
 
 // routes import
 const boards = require('./routes/boards');
@@ -21,6 +22,9 @@ dotenv.config({ path: './config/config.env' });
 connectDB();
 
 const app = express();
+
+// cors support
+app.use(cors());
 
 // body parser
 app.use(express.json());
