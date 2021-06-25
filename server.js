@@ -24,7 +24,14 @@ connectDB();
 const app = express();
 
 // cors support
-app.use(cors());
+var corsOptions = {
+  "origin": true,
+  "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+  "preflightContinue": false,
+  "optionsSuccessStatus": 204,
+  "credentials": true,
+}
+app.use(cors(corsOptions));
 
 // body parser
 app.use(express.json());
